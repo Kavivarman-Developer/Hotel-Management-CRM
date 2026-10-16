@@ -32,25 +32,26 @@ const createApp = (): Express => {
     contentSecurityPolicy: false, // Swagger UI compatibility
   }));
 
-  // CORS allowlist
-  const allowedOrigins = env.CLIENT_URL.split(',').map((url) => url.trim());
-  const isLanOrigin = (url: string) =>
-    /^https?:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+|localhost)(:\d+)?$/.test(url);
-
+  // CORS configuration: Allow all frontend origins (Vercel, Render, local, custom domain)
   app.use(
     cors({
       origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*') || isLanOrigin(origin)) {
-          callback(null, true);
-        } else {
-          callback(new Error(`Origin ${origin} not allowed by CORS`));
-        }
+        callback(null, true);
       },
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization', 'X-Correlation-Id', 'Idempotency-Key', 'x-qr-token', 'x-payment-signature'],
+      allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'X-Correlation-Id',
+        'Idempotency-Key',
+        'x-qr-token',
+        'x-payment-signature',
+      ],
     })
   );
+
+  app.options('*', cors());
 
   app.use(compression());
   app.use(express.json({ limit: '10mb' }));
