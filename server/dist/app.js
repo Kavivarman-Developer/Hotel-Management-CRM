@@ -59,6 +59,22 @@ const createApp = () => {
     app.use(correlationId_1.correlationIdMiddleware);
     // 3. Swagger Documentation
     (0, swagger_1.setupSwagger)(app);
+    // Root API Welcome / Status Endpoint
+    app.get('/', (req, res) => {
+        (0, response_1.sendSuccess)(res, {
+            service: 'GRAND OMR RESIDENCY Hotel PMS API',
+            status: 'ONLINE',
+            environment: env_1.env.NODE_ENV,
+            endpoints: {
+                health: '/api/health',
+                docs: '/api/docs',
+                auth: '/api/auth',
+                rooms: '/api/rooms',
+                admin: '/api/admin',
+            },
+            timestamp: new Date().toISOString(),
+        }, 'Grand OMR Residency Hotel PMS API is Live and Operational');
+    });
     // 4. Health Check Endpoint
     app.get('/api/health', (req, res) => {
         (0, response_1.sendSuccess)(res, {

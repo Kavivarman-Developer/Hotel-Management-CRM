@@ -44,10 +44,12 @@ export const playNotificationChime = (): void => {
 
 export const getSocket = (): Socket => {
   if (!socket) {
-    const serverUrl =
-      import.meta.env.VITE_API_BASE_URL
-        ? import.meta.env.VITE_API_BASE_URL.replace(/\/api\/?$/, '')
-        : 'http://localhost:5000';
+    const rawApi =
+      import.meta.env.VITE_API_BASE_URL ||
+      import.meta.env.VITE_API_URL ||
+      'https://hotel-backend-0x3t.onrender.com/api';
+
+    const serverUrl = rawApi.replace(/\/api\/?$/, '');
 
     socket = io(serverUrl, {
       transports: ['websocket', 'polling'],

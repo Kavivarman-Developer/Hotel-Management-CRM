@@ -9,7 +9,11 @@ import { ALL_TAG_TYPES } from './apiTags';
 import { storage } from '@/utils/storage';
 
 const getBaseUrl = (): string => {
-  return import.meta.env.VITE_API_BASE_URL || '/api';
+  const url =
+    import.meta.env.VITE_API_BASE_URL ||
+    import.meta.env.VITE_API_URL ||
+    'https://hotel-backend-0x3t.onrender.com/api';
+  return url.endsWith('/') ? url.slice(0, -1) : url;
 };
 
 const rawBaseQuery = fetchBaseQuery({
