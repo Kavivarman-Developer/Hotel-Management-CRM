@@ -89,7 +89,7 @@ export const router = createBrowserRouter([
       {
         path: 'bookings',
         element: (
-          <PermissionGuard requiredPermissions={['bookings.view', 'bookings.create', 'bookings.update']}>
+          <PermissionGuard requiredPermissions={['bookings.view']}>
             <AdminBookingsPage />
           </PermissionGuard>
         ),
@@ -97,7 +97,7 @@ export const router = createBrowserRouter([
       {
         path: 'stays',
         element: (
-          <PermissionGuard requiredPermissions={['checkin.complete', 'checkout.complete', 'dashboard.view']}>
+          <PermissionGuard requiredPermissions={['checkin.complete', 'checkout.complete']}>
             <StaysManagementPage />
           </PermissionGuard>
         ),
@@ -105,7 +105,7 @@ export const router = createBrowserRouter([
       {
         path: 'extra-stays',
         element: (
-          <PermissionGuard requiredPermissions={['checkin.complete', 'checkout.complete', 'bookings.update']}>
+          <PermissionGuard requiredPermissions={['checkin.complete', 'checkout.complete']}>
             <AdminExtraStaysPage />
           </PermissionGuard>
         ),
@@ -113,7 +113,7 @@ export const router = createBrowserRouter([
       {
         path: 'vouchers',
         element: (
-          <PermissionGuard requiredPermissions={['rates.manage', 'bookings.create']} requiredRoles={['SUPER_ADMIN', 'MANAGER']}>
+          <PermissionGuard requiredPermissions={['rates.manage']} requiredRoles={['SUPER_ADMIN', 'MANAGER']}>
             <AdminVouchersPage />
           </PermissionGuard>
         ),
@@ -121,7 +121,7 @@ export const router = createBrowserRouter([
       {
         path: 'registrations',
         element: (
-          <PermissionGuard requiredPermissions={['qr_registrations.view', 'guests.view']}>
+          <PermissionGuard requiredPermissions={['qr_registrations.view']}>
             <AdminRegistrationsPage />
           </PermissionGuard>
         ),
@@ -129,7 +129,7 @@ export const router = createBrowserRouter([
       {
         path: 'rooms',
         element: (
-          <PermissionGuard requiredPermissions={['rooms.view', 'rooms.manage']}>
+          <PermissionGuard requiredPermissions={['rooms.view']}>
             <AdminRoomsPage />
           </PermissionGuard>
         ),
@@ -145,7 +145,7 @@ export const router = createBrowserRouter([
       {
         path: 'reports',
         element: (
-          <PermissionGuard requiredPermissions={['reports.view', 'reports.export']} requiredRoles={['SUPER_ADMIN', 'MANAGER']}>
+          <PermissionGuard requiredPermissions={['reports.view']} requiredRoles={['SUPER_ADMIN', 'MANAGER']}>
             <AdminReportsPage />
           </PermissionGuard>
         ),

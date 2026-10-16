@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const auth_service_1 = require("../services/auth.service");
 const User_1 = require("../models/User");
+const PropertySettings_1 = require("../models/PropertySettings");
 const response_1 = require("../utils/response");
 const errors_1 = require("../utils/errors");
 const types_1 = require("../types");
@@ -86,7 +87,17 @@ class AuthController {
                 throw new errors_1.BadRequestError('A user with this email address already exists');
             }
             const passwordHash = await auth_service_1.AuthService.hashPassword(password);
-            const effectivePermissions = permissions || types_1.DEFAULT_ROLE_PERMISSIONS[role] || [];
+            let effectivePermissions = permissions;
+            if (!effectivePermissions) {
+                const settings = await PropertySettings_1.PropertySettings.findOne();
+                const savedRolePerms = settings?.rolePermissions instanceof Map
+                    ? settings.rolePermissions.get(role)
+                    : settings?.rolePermissions?.[role];
+                effectivePermissions =
+                    savedRolePerms ||
+                        types_1.DEFAULT_ROLE_PERMISSIONS[role] ||
+                        [];
+            }
             const newUser = await User_1.User.create({
                 name,
                 email: email.toLowerCase().trim(),

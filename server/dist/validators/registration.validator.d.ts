@@ -18,15 +18,15 @@ export declare const guestRegistrationSchema: z.ZodObject<{
         email: string;
         fullName: string;
         idProofNumber: string;
+        phone: string;
         nationality: string;
         idProofType: "Aadhaar" | "Passport" | "Driving License" | "Voter ID" | "Other";
-        phone: string;
     }, {
         email: string;
         fullName: string;
         idProofNumber: string;
-        idProofType: "Aadhaar" | "Passport" | "Driving License" | "Voter ID" | "Other";
         phone: string;
+        idProofType: "Aadhaar" | "Passport" | "Driving License" | "Voter ID" | "Other";
         nationality?: string | undefined;
     }>;
     additionalGuests: z.ZodOptional<z.ZodArray<z.ZodObject<{
@@ -64,9 +64,9 @@ export declare const guestRegistrationSchema: z.ZodObject<{
         email: string;
         fullName: string;
         idProofNumber: string;
+        phone: string;
         nationality: string;
         idProofType: "Aadhaar" | "Passport" | "Driving License" | "Voter ID" | "Other";
-        phone: string;
     };
     consentGranted: boolean;
     specialRequests?: string | undefined;
@@ -87,8 +87,8 @@ export declare const guestRegistrationSchema: z.ZodObject<{
         email: string;
         fullName: string;
         idProofNumber: string;
-        idProofType: "Aadhaar" | "Passport" | "Driving License" | "Voter ID" | "Other";
         phone: string;
+        idProofType: "Aadhaar" | "Passport" | "Driving License" | "Voter ID" | "Other";
         nationality?: string | undefined;
     };
     consentGranted: boolean;

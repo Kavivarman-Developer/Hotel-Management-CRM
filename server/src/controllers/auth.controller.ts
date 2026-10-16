@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../services/auth.service';
 import { User } from '../models/User';
+import { PropertySettings } from '../models/PropertySettings';
 import { sendSuccess } from '../utils/response';
 import { BadRequestError, NotFoundError } from '../utils/errors';
 import { DEFAULT_ROLE_PERMISSIONS } from '../types';
@@ -95,7 +96,19 @@ export class AuthController {
       }
 
       const passwordHash = await AuthService.hashPassword(password);
-      const effectivePermissions = permissions || DEFAULT_ROLE_PERMISSIONS[role as keyof typeof DEFAULT_ROLE_PERMISSIONS] || [];
+      let effectivePermissions = permissions;
+      if (!effectivePermissions) {
+        const settings = await PropertySettings.findOne();
+        const savedRolePerms =
+          settings?.rolePermissions instanceof Map
+            ? settings.rolePermissions.get(role)
+            : (settings?.rolePermissions as any)?.[role];
+
+        effectivePermissions =
+          savedRolePerms ||
+          DEFAULT_ROLE_PERMISSIONS[role as keyof typeof DEFAULT_ROLE_PERMISSIONS] ||
+          [];
+      }
 
       const newUser = await User.create({
         name,

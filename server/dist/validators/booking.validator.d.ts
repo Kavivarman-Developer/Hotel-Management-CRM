@@ -57,16 +57,16 @@ export declare const createBookingSchema: z.ZodObject<{
             country: z.ZodDefault<z.ZodString>;
         }, "strip", z.ZodTypeAny, {
             country: string;
-            street?: string | undefined;
             city?: string | undefined;
             state?: string | undefined;
             pincode?: string | undefined;
-        }, {
             street?: string | undefined;
+        }, {
             city?: string | undefined;
             state?: string | undefined;
             pincode?: string | undefined;
             country?: string | undefined;
+            street?: string | undefined;
         }>>;
     }, "strip", z.ZodTypeAny, {
         email: string;
@@ -75,21 +75,21 @@ export declare const createBookingSchema: z.ZodObject<{
         nationality: string;
         address?: {
             country: string;
-            street?: string | undefined;
             city?: string | undefined;
             state?: string | undefined;
             pincode?: string | undefined;
+            street?: string | undefined;
         } | undefined;
     }, {
         email: string;
         fullName: string;
         mobile: string;
         address?: {
-            street?: string | undefined;
             city?: string | undefined;
             state?: string | undefined;
             pincode?: string | undefined;
             country?: string | undefined;
+            street?: string | undefined;
         } | undefined;
         nationality?: string | undefined;
     }>;
@@ -106,10 +106,10 @@ export declare const createBookingSchema: z.ZodObject<{
         nationality: string;
         address?: {
             country: string;
-            street?: string | undefined;
             city?: string | undefined;
             state?: string | undefined;
             pincode?: string | undefined;
+            street?: string | undefined;
         } | undefined;
     };
     numberOfRooms: number;
@@ -135,11 +135,11 @@ export declare const createBookingSchema: z.ZodObject<{
         fullName: string;
         mobile: string;
         address?: {
-            street?: string | undefined;
             city?: string | undefined;
             state?: string | undefined;
             pincode?: string | undefined;
             country?: string | undefined;
+            street?: string | undefined;
         } | undefined;
         nationality?: string | undefined;
     };

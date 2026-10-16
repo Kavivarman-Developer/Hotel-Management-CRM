@@ -16,7 +16,9 @@ import {
   FileText,
   CreditCard,
   Phone,
+  Lock,
 } from 'lucide-react';
+import { useAppSelector } from '@/app/hooks';
 import {
   useGetStaysQuery,
   useGetArrivalsQuery,
@@ -39,7 +41,12 @@ import { formatDisplayDate } from '@/utils/dates';
 type StayTab = 'ARRIVALS' | 'CHECKED_IN' | 'CHECKED_OUT' | 'ALL';
 
 export const StaysManagementPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<StayTab>('ARRIVALS');
+  const { user } = useAppSelector((state) => state.auth);
+  const isSuperAdmin = user?.role === 'SUPER_ADMIN';
+  const canCheckIn = isSuperAdmin || Boolean(user?.permissions?.includes('checkin.complete' as any));
+  const canCheckOut = isSuperAdmin || Boolean(user?.permissions?.includes('checkout.complete' as any));
+
+  const [activeTab, setActiveTab] = useState<StayTab>(canCheckIn ? 'ARRIVALS' : 'CHECKED_IN');
   const [searchTerm, setSearchTerm] = useState('');
 
   // Queries
@@ -57,7 +64,7 @@ export const StaysManagementPage: React.FC = () => {
     data: arrivalsResponse,
     isLoading: isArrivalsLoading,
     refetch: refetchArrivals,
-  } = useGetArrivalsQuery(undefined, { pollingInterval: 15000 });
+  } = useGetArrivalsQuery(undefined, { pollingInterval: 15000, skip: !canCheckIn });
 
   const { data: roomsResponse } = useGetAdminRoomsQuery({ status: 'ACTIVE' });
 
@@ -503,14 +510,20 @@ export const StaysManagementPage: React.FC = () => {
                             <StatusBadge status={b.paymentStatus} size="sm" />
                           </td>
                           <td className="py-3.5 px-4 text-right">
-                            <Button
-                              variant="primary"
-                              size="sm"
-                              onClick={() => handleOpenCheckIn(b)}
-                              leftIcon={<KeyRound className="w-3.5 h-3.5" />}
-                            >
-                              Check-In Guest
-                            </Button>
+                            {canCheckIn ? (
+                              <Button
+                                variant="primary"
+                                size="sm"
+                                onClick={() => handleOpenCheckIn(b)}
+                                leftIcon={<KeyRound className="w-3.5 h-3.5" />}
+                              >
+                                Check-In Guest
+                              </Button>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+                                Check-In Blocked
+                              </span>
+                            )}
                           </td>
                         </tr>
                       );
@@ -634,14 +647,20 @@ export const StaysManagementPage: React.FC = () => {
                                   >
                                     Extend Stay
                                   </Button>
-                                  <Button
-                                    variant="primary"
-                                    size="sm"
-                                    onClick={() => handleOpenCheckOut(s)}
-                                    leftIcon={<LogOut className="w-3.5 h-3.5" />}
-                                  >
-                                    Check-Out
-                                  </Button>
+                                  {canCheckOut ? (
+                                    <Button
+                                      variant="primary"
+                                      size="sm"
+                                      onClick={() => handleOpenCheckOut(s)}
+                                      leftIcon={<LogOut className="w-3.5 h-3.5" />}
+                                    >
+                                      Check-Out
+                                    </Button>
+                                  ) : (
+                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+                                      Check-Out Blocked
+                                    </span>
+                                  )}
                                 </>
                               ) : (
                                 <span className="font-mono text-[11px] text-slate-400">

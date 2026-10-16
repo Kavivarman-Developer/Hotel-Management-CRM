@@ -23,10 +23,10 @@ export declare const createPartnerSchema: z.ZodObject<{
     approvalStatus: z.ZodDefault<z.ZodEnum<[PartnerApprovalStatus.PENDING, PartnerApprovalStatus.APPROVED, PartnerApprovalStatus.REJECTED]>>;
 }, "strip", z.ZodTypeAny, {
     description: string;
-    amenities: string[];
-    images: string[];
     address: string;
     city: string;
+    amenities: string[];
+    images: string[];
     hotelName: string;
     contactInformation: {
         email: string;
@@ -75,10 +75,10 @@ export declare const updatePartnerSchema: z.ZodObject<{
     approvalStatus: z.ZodOptional<z.ZodDefault<z.ZodEnum<[PartnerApprovalStatus.PENDING, PartnerApprovalStatus.APPROVED, PartnerApprovalStatus.REJECTED]>>>;
 }, "strip", z.ZodTypeAny, {
     description?: string | undefined;
-    amenities?: string[] | undefined;
-    images?: string[] | undefined;
     address?: string | undefined;
     city?: string | undefined;
+    amenities?: string[] | undefined;
+    images?: string[] | undefined;
     hotelName?: string | undefined;
     contactInformation?: {
         email: string;
@@ -90,10 +90,10 @@ export declare const updatePartnerSchema: z.ZodObject<{
     approvalStatus?: PartnerApprovalStatus | undefined;
 }, {
     description?: string | undefined;
-    amenities?: string[] | undefined;
-    images?: string[] | undefined;
     address?: string | undefined;
     city?: string | undefined;
+    amenities?: string[] | undefined;
+    images?: string[] | undefined;
     hotelName?: string | undefined;
     contactInformation?: {
         email: string;

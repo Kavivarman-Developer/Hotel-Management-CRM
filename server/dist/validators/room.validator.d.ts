@@ -119,8 +119,8 @@ export declare const createRoomTypeSchema: z.ZodObject<{
     bedConfiguration: string;
     baseRate: number;
     defaultNightlyRate: number;
-    amenities?: string[] | undefined;
     tagline?: string | undefined;
+    amenities?: string[] | undefined;
     category?: string | undefined;
     features?: string[] | undefined;
     images?: string[] | undefined;

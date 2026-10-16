@@ -220,6 +220,20 @@ export const AdminSettingsPage: React.FC = () => {
     }
   };
 
+  const handleSelectAllForStaffCategory = (cat: PermissionCategory) => {
+    const catPermIds = cat.permissions.map((p) => p.id);
+    const allChecked = catPermIds.every((id) => staffPermissionsDraft.includes(id));
+
+    let updated: string[];
+    if (allChecked) {
+      updated = staffPermissionsDraft.filter((id) => !catPermIds.includes(id));
+    } else {
+      const toAdd = catPermIds.filter((id) => !staffPermissionsDraft.includes(id));
+      updated = [...staffPermissionsDraft, ...toAdd];
+    }
+    setStaffPermissionsDraft(updated);
+  };
+
   const handleSaveStaffIndividual = async () => {
     if (!editingStaff) return;
     try {
@@ -744,8 +758,17 @@ export const AdminSettingsPage: React.FC = () => {
             <div className="space-y-4">
               {catalog.map((cat) => (
                 <div key={cat.category} className="space-y-2">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 border-b border-[#EAECF0] dark:border-slate-800 pb-1">
-                    {cat.category}
+                  <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 border-b border-[#EAECF0] dark:border-slate-800 pb-1">
+                    <span>{cat.category}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleSelectAllForStaffCategory(cat)}
+                      className="text-[11px] font-semibold text-[#487FFF] hover:underline normal-case"
+                    >
+                      {cat.permissions.every((p) => staffPermissionsDraft.includes(p.id))
+                        ? 'Clear Category'
+                        : 'Select All'}
+                    </button>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {cat.permissions.map((p) => {

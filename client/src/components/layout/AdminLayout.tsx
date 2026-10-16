@@ -28,8 +28,8 @@ export const AdminLayout: React.FC = () => {
 
   const isDark = theme === 'dark';
 
-  // Keep authenticated staff permissions synced with server
-  useGetMeQuery(undefined, { skip: !isAuthenticated, pollingInterval: 30000 });
+  // Keep authenticated staff permissions immediately synced with server
+  useGetMeQuery(undefined, { skip: !isAuthenticated, pollingInterval: 5000, refetchOnFocus: true });
 
   if (!isAuthenticated || !user) {
     return <Navigate to="/login" state={{ from: location }} replace />;

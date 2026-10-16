@@ -91,7 +91,7 @@ export const settingsApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { permissions, applyToExistingUsers },
       }),
-      invalidatesTags: [API_TAGS.PERMISSIONS, API_TAGS.STAFF, API_TAGS.SETTINGS],
+      invalidatesTags: [API_TAGS.PERMISSIONS, API_TAGS.STAFF, API_TAGS.SETTINGS, API_TAGS.AUTH],
     }),
 
     updateStaffPermissions: builder.mutation<
@@ -103,7 +103,7 @@ export const settingsApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: { permissions },
       }),
-      invalidatesTags: [API_TAGS.PERMISSIONS, API_TAGS.STAFF],
+      invalidatesTags: [API_TAGS.PERMISSIONS, API_TAGS.STAFF, API_TAGS.AUTH],
     }),
   }),
 });

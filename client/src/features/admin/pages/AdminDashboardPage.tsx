@@ -310,8 +310,8 @@ export const AdminDashboardPage: React.FC = () => {
             </button>
           </div>
 
-          {/* Quick Staff Onboarding for Super Admin & Manager */}
-          {(user?.role === 'SUPER_ADMIN' || user?.role === 'MANAGER') && (
+          {/* Quick Staff Onboarding for Super Admin & Users with staff.manage */}
+          {(user?.role === 'SUPER_ADMIN' || Boolean(user?.permissions?.includes('staff.manage' as any))) && (
             <Link
               to="/admin/staff?add=true"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#1E293B] border border-[#EAECF0] dark:border-slate-800 text-xs font-semibold text-gray-700 dark:text-slate-200 hover:bg-gray-50 dark:hover:bg-slate-800 shadow-xs transition-colors"

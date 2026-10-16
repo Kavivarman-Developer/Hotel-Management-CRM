@@ -19,6 +19,7 @@ export declare const updatePropertySettingsSchema: z.ZodObject<{
     extraStayHourlyRatePaise: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
     email?: string | undefined;
+    propertyName?: string | undefined;
     tagline?: string | undefined;
     address?: string | undefined;
     city?: string | undefined;
@@ -26,7 +27,6 @@ export declare const updatePropertySettingsSchema: z.ZodObject<{
     pincode?: string | undefined;
     country?: string | undefined;
     phone?: string | undefined;
-    propertyName?: string | undefined;
     checkInTime?: string | undefined;
     checkOutTime?: string | undefined;
     timezone?: string | undefined;
@@ -37,6 +37,7 @@ export declare const updatePropertySettingsSchema: z.ZodObject<{
     extraStayHourlyRatePaise?: number | undefined;
 }, {
     email?: string | undefined;
+    propertyName?: string | undefined;
     tagline?: string | undefined;
     address?: string | undefined;
     city?: string | undefined;
@@ -44,7 +45,6 @@ export declare const updatePropertySettingsSchema: z.ZodObject<{
     pincode?: string | undefined;
     country?: string | undefined;
     phone?: string | undefined;
-    propertyName?: string | undefined;
     checkInTime?: string | undefined;
     checkOutTime?: string | undefined;
     timezone?: string | undefined;
