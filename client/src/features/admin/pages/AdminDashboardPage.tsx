@@ -34,6 +34,7 @@ import {
   UserCheck,
   CreditCard,
   MapPin,
+  UserPlus,
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import {
@@ -308,6 +309,18 @@ export const AdminDashboardPage: React.FC = () => {
               <span>Date-wise Calendar</span>
             </button>
           </div>
+
+          {/* Quick Staff Onboarding for Super Admin & Manager */}
+          {(user?.role === 'SUPER_ADMIN' || user?.role === 'MANAGER') && (
+            <Link
+              to="/admin/staff?add=true"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#1E293B] border border-[#EAECF0] dark:border-slate-800 text-xs font-semibold text-gray-700 dark:text-slate-200 hover:bg-gray-50 dark:hover:bg-slate-800 shadow-xs transition-colors"
+              title="Onboard new staff member"
+            >
+              <UserPlus className="w-3.5 h-3.5 text-[#487FFF]" />
+              <span className="hidden sm:inline">Add Staff</span>
+            </Link>
+          )}
 
           {/* Front Desk Counter QR Stand */}
           <button

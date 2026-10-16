@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Lock, Mail, ShieldCheck, ArrowRight, Sparkles, Building } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ShieldCheck, Hotel } from 'lucide-react';
 import { useLoginMutation } from '../authApi';
 import { Input } from '@/components/common/Input';
 import { Button } from '@/components/common/Button';
@@ -29,44 +29,45 @@ export const LoginPage: React.FC = () => {
     } catch (err: any) {
       if (err?.status === 'FETCH_ERROR') {
         setErrorMessage(
-          'Cannot connect to backend server. Port 5000 is offline or MongoDB Atlas IP is not whitelisted yet.'
+          'Cannot connect to backend server. Please verify network connectivity.'
         );
       } else {
         setErrorMessage(
           err?.data?.error?.message ||
             err?.data?.message ||
-            'Invalid credentials. Please verify your email and password.'
+            'Invalid credentials. Please verify your staff email and password.'
         );
       }
     }
   };
 
-  const handleQuickFill = (demoEmail: string, demoPass: string) => {
-    setEmail(demoEmail);
-    setPassword(demoPass);
-    setErrorMessage(null);
-  };
-
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+    <div className="min-h-[85vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md space-y-6">
         {/* Brand header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-gold-400 via-gold-500 to-gold-700 p-0.5 shadow-xl shadow-gold-500/20 mx-auto">
-            <div className="w-full h-full bg-forest-950 rounded-[14px] flex items-center justify-center text-gold-400 font-serif font-bold text-xl">
-              G
-            </div>
+          <div className="w-14 h-14 rounded-2xl bg-[#487FFF] shadow-lg shadow-[#487FFF]/30 mx-auto flex items-center justify-center">
+            <Hotel className="w-7 h-7 text-white" />
           </div>
-          <h1 className="font-serif text-2xl font-bold text-stone-100">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-stone-100">
             GRAND OMR RESIDENCY
           </h1>
-          <p className="text-xs uppercase tracking-widest text-gold-400 font-semibold">
+          <p className="text-xs uppercase tracking-widest text-[#487FFF] font-semibold">
             Property Management System
           </p>
         </div>
 
         {/* Login Card */}
-        <div className="rounded-2xl border border-stone-800 bg-stone-900/80 p-6 md:p-8 backdrop-blur-xl shadow-2xl shadow-black/80 space-y-6">
+        <div className="rounded-2xl border border-slate-200 dark:border-stone-800 bg-white dark:bg-stone-900/90 p-6 md:p-8 backdrop-blur-xl shadow-xl space-y-6">
+          <div className="border-b border-slate-100 dark:border-stone-800/80 pb-4">
+            <h2 className="text-base font-semibold text-slate-900 dark:text-stone-100">
+              Staff & Management Sign In
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-stone-400 mt-1">
+              Authorized personnel only. Enter your assigned hotel staff credentials.
+            </p>
+          </div>
+
           {errorMessage && (
             <ErrorMessage title="Authentication Failed" message={errorMessage} />
           )}
@@ -75,10 +76,10 @@ export const LoginPage: React.FC = () => {
             <Input
               label="Staff Email"
               type="email"
-              placeholder="staff@grandomrresidency.com"
+              placeholder="e.g. staff@grandomrresidency.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              leftIcon={<Mail className="w-4 h-4" />}
+              leftIcon={<Mail className="w-4 h-4 text-slate-400" />}
               required
             />
 
@@ -88,16 +89,16 @@ export const LoginPage: React.FC = () => {
               placeholder="••••••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              leftIcon={<Lock className="w-4 h-4" />}
+              leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
               required
             />
 
             <div className="pt-2">
               <Button
                 type="submit"
-                variant="gold"
+                variant="primary"
                 size="lg"
-                className="w-full shadow-lg shadow-gold-500/20"
+                className="w-full shadow-lg shadow-[#487FFF]/20"
                 isLoading={isLoading}
                 rightIcon={<ArrowRight className="w-4 h-4" />}
               >
@@ -106,47 +107,19 @@ export const LoginPage: React.FC = () => {
             </div>
           </form>
 
-          {/* Quick Demo Credentials Autofill for Reviewers */}
-          <div className="pt-4 border-t border-stone-800 space-y-3">
-            <span className="text-[11px] uppercase tracking-wider text-stone-400 block font-semibold text-center">
-              Quick Role Switch (Demo Credentials)
-            </span>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() =>
-                  handleQuickFill('admin@grandomrresidency.com', 'SuperAdmin@2026')
-                }
-                className="p-2 rounded-lg bg-stone-950 border border-stone-800 hover:border-gold-500/50 text-[11px] text-stone-200 transition-colors"
-              >
-                Super Admin
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  handleQuickFill('manager@grandomrresidency.com', 'Manager@2026')
-                }
-                className="p-2 rounded-lg bg-stone-950 border border-stone-800 hover:border-gold-500/50 text-[11px] text-stone-200 transition-colors"
-              >
-                Manager
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  handleQuickFill('frontdesk@grandomrresidency.com', 'FrontDesk@2026')
-                }
-                className="p-2 rounded-lg bg-stone-950 border border-stone-800 hover:border-gold-500/50 text-[11px] text-stone-200 transition-colors"
-              >
-                Front Desk
-              </button>
-            </div>
+          {/* Secure Access Notice */}
+          <div className="pt-4 border-t border-slate-100 dark:border-stone-800/80 flex items-start gap-2.5 text-xs text-slate-500 dark:text-stone-400 bg-slate-50 dark:bg-stone-950/60 p-3 rounded-xl">
+            <ShieldCheck className="w-4 h-4 text-[#487FFF] shrink-0 mt-0.5" />
+            <p className="leading-relaxed">
+              New staff member? Contact your <strong className="text-slate-700 dark:text-stone-200">Super Admin</strong> or <strong className="text-slate-700 dark:text-stone-200">Hotel Manager</strong> to create and activate your account credentials.
+            </p>
           </div>
         </div>
 
         <div className="text-center">
           <Link
             to="/"
-            className="text-xs text-stone-400 hover:text-gold-400 transition-colors"
+            className="text-xs text-slate-500 dark:text-stone-400 hover:text-[#487FFF] transition-colors"
           >
             ← Return to Guest Website
           </Link>

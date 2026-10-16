@@ -137,7 +137,7 @@ export const router = createBrowserRouter([
       {
         path: 'staff',
         element: (
-          <PermissionGuard requiredPermissions={['staff.manage', 'permissions.manage']} requiredRoles={['SUPER_ADMIN', 'MANAGER']}>
+          <PermissionGuard requiredPermissions={['staff.manage']} requiredRoles={['SUPER_ADMIN', 'MANAGER']}>
             <AdminStaffPage />
           </PermissionGuard>
         ),
